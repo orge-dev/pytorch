@@ -4,7 +4,6 @@ import copy
 import logging
 import os
 import pickle
-import random
 from contextlib import contextmanager
 from functools import partial
 from typing import Callable, Union
@@ -25,6 +24,7 @@ from .partitioners import (
     min_cut_rematerialization_partition,
 )
 import torch.utils._pytree as pytree
+import secrets
 
 
 log = logging.getLogger(__name__)
@@ -311,7 +311,7 @@ def get_inputs(input_data_path):
         for meta in inputs_meta:
             if len(meta) == 1:
                 type = meta
-                input = type(random.rand())
+                input = type(secrets.SystemRandom().rand())
             else:
                 type, shape, stride, dtype, device = meta
                 if dtype in {
