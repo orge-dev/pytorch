@@ -69,8 +69,8 @@ def download_reports(commit_sha, configs=("dynamo38", "dynamo311", "eager311")):
 
     # This page lists all artifacts.
     listings = requests.get(
-        f"https://hud.pytorch.org/api/artifacts/s3/{workflow_run_id}"
-    ).json()
+        f"https://hud.pytorch.org/api/artifacts/s3/{workflow_run_id}", 
+    timeout=60).json()
 
     def download_report(job_name, subdir):
         job_id = workflow_jobs[job_name]
