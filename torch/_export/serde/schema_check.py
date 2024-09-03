@@ -7,6 +7,7 @@ from typing import Any, Dict, Optional, Union
 
 from torch._export.serde import schema
 from torch._export.serde.union import _Union
+import yaml
 
 
 class SchemaUpdateError(Exception):
@@ -209,7 +210,7 @@ def update_schema():
         checksum_base = match.group(1)
         from yaml import load, Loader
 
-        dst = load(content, Loader=Loader)
+        dst = load(content, Loader=yaml.SafeLoader)
         assert isinstance(dst, dict)
     else:
         checksum_base = None
