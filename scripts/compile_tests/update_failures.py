@@ -13,6 +13,7 @@ from common import (
     key,
     open_test_results,
 )
+from security import safe_command
 
 """
 Usage: update_failures.py /path/to/dynamo_test_failures.py /path/to/test commit_sha
@@ -77,14 +78,14 @@ def patch_file(
     def remove_file(path, name):
         file = os.path.join(path, name)
         cmd = ["git", "rm", file]
-        subprocess.run(cmd)
+        safe_command.run(subprocess.run, cmd)
 
     def add_file(path, name):
         file = os.path.join(path, name)
         with open(file, "w") as fp:
             pass
         cmd = ["git", "add", file]
-        subprocess.run(cmd)
+        safe_command.run(subprocess.run, cmd)
 
     covered_unexpected_successes = set()
 

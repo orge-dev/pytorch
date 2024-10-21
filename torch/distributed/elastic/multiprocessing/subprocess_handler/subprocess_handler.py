@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 from typing import Any, Dict, Optional, Tuple
+from security import safe_command
 
 __all__ = ["SubprocessHandler"]
 
@@ -54,11 +55,7 @@ class SubprocessHandler:
         kwargs: Dict[str, Any] = {}
         if not IS_WINDOWS:
             kwargs["start_new_session"] = True
-        return subprocess.Popen(
-            # pyre-fixme[6]: Expected `Union[typing.Sequence[Union[_PathLike[bytes],
-            #  _PathLike[str], bytes, str]], bytes, str]` for 1st param but got
-            #  `Tuple[str, *Tuple[Any, ...]]`.
-            args=args,
+        return safe_command.run(subprocess.Popen, args=args,
             env=env,
             stdout=self._stdout,
             stderr=self._stderr,

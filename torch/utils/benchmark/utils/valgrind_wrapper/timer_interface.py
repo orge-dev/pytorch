@@ -18,6 +18,7 @@ import torch
 from torch.utils.benchmark.utils import common, cpp_jit
 from torch.utils.benchmark.utils._stubs import CallgrindModuleType
 import operator
+from security import safe_command
 
 
 __all__ = ["FunctionCount", "FunctionCounts", "CallgrindStats", "CopyIfCallgrind"]
@@ -597,8 +598,7 @@ class _ValgrindWrapper:
             # https://thraxil.org/users/anders/posts/2008/03/13/Subprocess-Hanging-PIPE-is-your-enemy/
             f_stdout_stderr = open(stdout_stderr_log, "wb")
             try:
-                invocation = subprocess.run(
-                    args,
+                invocation = safe_command.run(subprocess.run, args,
                     stdout=f_stdout_stderr,
                     stderr=subprocess.STDOUT,
                     **kwargs,
