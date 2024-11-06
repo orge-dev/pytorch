@@ -5,7 +5,7 @@ import warnings
 try:
     import lxml.etree
 
-    p = lxml.etree.XMLParser(huge_tree=True)
+    p = lxml.etree.XMLParser(huge_tree=True, resolve_entities=False)
     parse = functools.partial(lxml.etree.parse, parser=p)
 except ImportError:
     import xml.etree.ElementTree as ET
