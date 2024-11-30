@@ -4,7 +4,6 @@ import copy
 import itertools
 import math
 import os
-import random
 import sys
 import tempfile
 import time
@@ -86,6 +85,7 @@ import torch.distributed.optim.post_localSGD_optimizer as post_localSGD_optimize
 
 from torch.utils.data.distributed import DistributedSampler
 import operator
+import secrets
 
 try:
     import torchvision
@@ -6492,7 +6492,7 @@ class DistributedTest:
             tensor_size = 10
             bcast_tensor = torch.tensor(
                 [
-                    (random.random() < 0.5 if self.rank == 0 else False)
+                    (secrets.SystemRandom().random() < 0.5 if self.rank == 0 else False)
                     for _ in range(tensor_size)
                 ]
             ).to(self.rank)

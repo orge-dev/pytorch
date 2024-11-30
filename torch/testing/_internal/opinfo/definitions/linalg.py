@@ -1,7 +1,6 @@
 # mypy: ignore-errors
 
 import itertools
-import random
 import unittest
 from functools import partial
 from itertools import chain, product
@@ -58,6 +57,7 @@ from torch.testing._internal.opinfo.core import (
     SampleInput,
 )
 from torch.testing._internal.opinfo.refs import PythonRefInfo, ReductionPythonRefInfo
+import secrets
 
 
 def sample_kwargs_vector_norm(t, **kwargs):
@@ -938,7 +938,7 @@ def sample_inputs_linalg_eigh(op_info, device, dtype, requires_grad=False, **kwa
     for sample in samples:
         # Note: we cannot use np.random.choice here as TorchDynamo
         # does not support tensors of strings.
-        sample.kwargs = {"UPLO": random.choice(["L", "U"])}
+        sample.kwargs = {"UPLO": secrets.choice(["L", "U"])}
         sample.output_process_fn_grad = out_fn
         yield sample
 
