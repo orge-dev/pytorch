@@ -4,8 +4,7 @@ import os
 import pprint
 import re
 import subprocess
-
-import requests
+from security import safe_requests
 
 
 CONFIGS = {
@@ -68,7 +67,7 @@ def download_reports(commit_sha, configs=("dynamo38", "dynamo311", "eager311")):
         ), f"{job} not found, is the commit_sha correct? has the job finished running? The GitHub API may take a couple minutes to update."
 
     # This page lists all artifacts.
-    listings = requests.get(
+    listings = safe_requests.get(
         f"https://hud.pytorch.org/api/artifacts/s3/{workflow_run_id}"
     ).json()
 
