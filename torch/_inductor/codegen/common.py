@@ -1679,7 +1679,7 @@ def jinja2_env():
 
         return jinja2.Environment(
             undefined=jinja2.StrictUndefined,
-        )
+        autoescape=True)
     except ImportError:
         return None
 
